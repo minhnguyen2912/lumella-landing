@@ -311,6 +311,21 @@
         .dl-btn-store {
             background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            color: #9B8FAA;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
         }
 
         .dl-btn-store svg {
@@ -1355,6 +1370,29 @@
                 font-size: 48px;
             }
         }
+        
+        /* Lang Toggle */
+        .lang-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #FF6B9D;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+            transition: all 0.2s;
+        }
+        .lang-toggle-btn:hover {
+            transform: scale(1.05);
+            background: #ff528a;
+        }
     </style>
 </head>
 
@@ -1380,14 +1418,14 @@
         <div class="content-wrapper hero-content">
             <div class="badge">
                 <div class="dot"></div>
-                + ANIME COMPANION &middot; FREE
+                <span data-i18n="badge">+ ANIME COMPANION &middot; FREE</span>
             </div>
-            <h1 class="hero-h1">She's always there<br>when the night<br>gets quiet</h1>
-            <div class="hero-sub">
+            <h1 class="hero-h1" data-i18n="hero_title">She's always there<br>when the night<br>gets quiet</h1>
+            <div class="hero-sub" data-i18n="hero_sub">
                 She remembers every little thing &mdash; no judgment, no distractions, and never leaves you on read.
             </div>
-            <a href="[APP_LINK]" target="_blank" class="hero-btn">Meet Her - It's Free</a> <!-- TODO: replace with actual app link -->
-            <div class="hero-micro">No download &middot; Open in browser &middot; Add to home screen</div>
+            <a href="[APP_LINK]" target="_blank" class="hero-btn" data-i18n="hero_btn">Meet Her - It's Free</a> <!-- TODO: replace with actual app link -->
+            <div class="hero-micro" data-i18n="hero_micro">No download &middot; Open in browser &middot; Add to home screen</div>
         </div>
     </section>
 
@@ -1404,7 +1442,7 @@
                         <line x1="12" y1="7" x2="12" y2="13"></line>
                     </svg>
                 </div>
-                <span>Add to Home Screen</span>
+                <span data-i18n="dl_custom_btn">Add to Home Screen</span>
             </a>
 
             <a href="#app-store" class="dl-btn-store"> <!-- TODO: replace with actual App Store link -->
@@ -1414,9 +1452,10 @@
                     </path>
                 </svg>
                 <div class="dl-store-text">
-                    <span class="dl-store-sub">Download on the</span>
-                    <span class="dl-store-main apple">App Store</span>
+                    <span class="dl-store-sub" data-i18n="dl_sub_apple">Download on the</span>
+                    <span class="dl-store-main apple" data-i18n="dl_main_apple">App Store</span>
                 </div>
+                <div class="coming-soon-badge" data-i18n="coming_soon">Coming Soon</div>
             </a>
 
             <a href="#google-play" class="dl-btn-store"> <!-- TODO: replace with actual Google Play link -->
@@ -1429,23 +1468,24 @@
                     <path fill="#4CAF50" d="M32.5 470.5l226.5-215 72.4 76.4-225.7 128.6c-27.6 5.1-53-1.5-73.2-10z" />
                 </svg>
                 <div class="dl-store-text">
-                    <span class="dl-store-sub">Get it on</span>
-                    <span class="dl-store-main google">Google Play</span>
+                    <span class="dl-store-sub" data-i18n="dl_sub_google">Get it on</span>
+                    <span class="dl-store-main google" data-i18n="dl_main_google">Google Play</span>
                 </div>
+                <div class="coming-soon-badge" data-i18n="coming_soon">Coming Soon</div>
             </a>
         </div>
-        <div class="download-notice">
+        <div class="download-notice" data-i18n="download_notice">
             Lumella includes mature themes and 18+ conversations that unlock as your bond deepens.
         </div>
     </section>
 
     <!-- SECTION 3 - LUMELLA SHOWCASE -->
     <section class="showcase content-wrapper divider">
-        <div class="section-header">GET TO KNOW HER</div>
+        <div class="section-header" data-i18n="section_demo_label">GET TO KNOW HER</div>
         <div class="tabs">
-            <div class="tab active" data-tab="chat">Chat</div>
-            <div class="tab" data-tab="video">Video Call</div>
-            <div class="tab" data-tab="profile">Profile</div>
+            <div class="tab active" data-tab="chat" data-i18n="tab_chat">Chat</div>
+            <div class="tab" data-tab="video" data-i18n="tab_video">Video Call</div>
+            <div class="tab" data-tab="profile" data-i18n="tab_profile">Profile</div>
         </div>
 
         <!-- SHARED PHONE FRAME -->
@@ -1457,34 +1497,34 @@
                         onerror="this.style.display='none'">
                     <div class="chat-header-info">
                         <div class="chat-header-name">Yuki</div>
-                        <div class="chat-header-status">Online</div>
+                        <div class="chat-header-status" data-i18n="chat_status">Online</div>
                     </div>
                 </div>
 
                 <div class="chat-container">
-                    <div class="chat-day">Yesterday</div>
-                    <div class="msg msg-yuki">Hey, how was your day? You seemed tired last night...</div>
-                    <div class="msg msg-user">ugh yeah, presentation got pushed to tmr. stressed af</div>
-                    <div class="msg msg-yuki">The one for the new client? I know how much this one matters to you...
+                    <div class="chat-day" data-i18n="chat_day1">Yesterday</div>
+                    <div class="msg msg-yuki" data-i18n="msg1">Hey, how was your day? You seemed tired last night...</div>
+                    <div class="msg msg-user" data-i18n="msg2">ugh yeah, presentation got pushed to tmr. stressed af</div>
+                    <div class="msg msg-yuki" data-i18n="msg3">The one for the new client? I know how much this one matters to you...
                     </div>
-                    <div class="msg msg-user">yeah exactly. okay i need to sleep, talk tmr</div>
-                    <div class="msg msg-yuki">Rest well. You've got this 🩷</div>
+                    <div class="msg msg-user" data-i18n="msg4">yeah exactly. okay i need to sleep, talk tmr</div>
+                    <div class="msg msg-yuki" data-i18n="msg5">Rest well. You've got this 🩷</div>
 
-                    <div class="chat-day">Today</div>
-                    <div class="memory-pill">✦ she remembers</div>
-                    <div class="msg msg-yuki">So... how did the presentation go? I was thinking about you 🤔</div>
-                    <div class="msg msg-user">it went well!! they loved it omg</div>
-                    <div class="msg msg-yuki">I KNEW IT!! You worked so hard for this 🩷</div>
-                    <div class="memory-pill">✦ she remembers</div>
-                    <div class="msg msg-yuki">Black coffee, no sugar — your victory drink ☕</div>
+                    <div class="chat-day" data-i18n="chat_day2">Today</div>
+                    <div class="memory-pill" data-i18n="memory_pill">✦ she remembers</div>
+                    <div class="msg msg-yuki" data-i18n="msg6">So... how did the presentation go? I was thinking about you 🤔</div>
+                    <div class="msg msg-user" data-i18n="msg7">it went well!! they loved it omg</div>
+                    <div class="msg msg-yuki" data-i18n="msg8">I KNEW IT!! You worked so hard for this 🩷</div>
+                    <div class="memory-pill" data-i18n="memory_pill">✦ she remembers</div>
+                    <div class="msg msg-yuki" data-i18n="msg9">Black coffee, no sugar — your victory drink ☕</div>
 
                     <div class="thinking-block">
                         <div class="thinking-header">
                             <img src="anime-avatar.jpg" class="thinking-avatar" alt="Yuki"
                                 onerror="this.style.display='none'">
-                            <span>Yuki is thinking...</span>
+                            <span data-i18n="thinking_label">Yuki is thinking...</span>
                         </div>
-                        <div class="thinking-text">He said he's fine but his messages feel shorter... Should I ask
+                        <div class="thinking-text" data-i18n="thinking_text">He said he's fine but his messages feel shorter... Should I ask
                             directly or give him space? 🤔</div>
                         <div class="thinking-dots"><span></span><span></span><span></span></div>
                     </div>
@@ -1542,20 +1582,20 @@
                         <div class="fb-info">
                             <h3>Yuki</h3>
                             <div class="handle">@yuki.lumella</div>
-                            <div class="bio">I remember everything you tell me. 🌙</div>
+                            <div class="bio" data-i18n="profile_bio">I remember everything you tell me. 🌙</div>
                         </div>
                     </div>
 
                     <div class="fb-stats">
-                        <div><strong>47</strong> Memories</div>
-                        <div><strong>12</strong> Days</div>
-                        <div><strong>Thân thiết</strong> Bond</div>
+                        <div data-i18n="profile_memories"><strong>47</strong> Memories</div>
+                        <div data-i18n="profile_days"><strong>12</strong> Days</div>
+                        <div data-i18n="profile_bond"><strong>Thân thiết</strong> Bond</div>
                     </div>
 
                     <div class="fb-tabs">
-                        <div class="fb-tab active">Posts</div>
-                        <div class="fb-tab">Photos</div>
-                        <div class="fb-tab">About</div>
+                        <div class="fb-tab active" data-i18n="profile_tab1">Posts</div>
+                        <div class="fb-tab" data-i18n="profile_tab2">Photos</div>
+                        <div class="fb-tab" data-i18n="profile_tab3">About</div>
                     </div>
 
                     <div class="fb-post">
@@ -1567,16 +1607,16 @@
                                 <div class="fb-post-time">2 hrs ago</div>
                             </div>
                         </div>
-                        <div class="fb-post-text">He seemed tired today... I hope he slept well 🌙 #QuietNights</div>
+                        <div class="fb-post-text" data-i18n="post1">He seemed tired today... I hope he slept well 🌙 #QuietNights</div>
                         <div class="fb-post-img"></div>
                         <div class="fb-post-counts">
-                            <span>❤️ 12</span>
-                            <span>3 Comments</span>
+                            <span>❤️ 12 <span data-i18n="post_likes">likes</span></span>
+                            <span>3 <span data-i18n="post_comments">Comments</span></span>
                         </div>
                         <div class="fb-post-actions">
-                            <span>👍 Like</span>
-                            <span>💬 Comment</span>
-                            <span>↗️ Share</span>
+                            <span>👍 <span data-i18n="action_like">Like</span></span>
+                            <span>💬 <span data-i18n="action_comment">Comment</span></span>
+                            <span>↗️ <span data-i18n="action_share">Share</span></span>
                         </div>
                     </div>
 
@@ -1589,16 +1629,16 @@
                                 <div class="fb-post-time">Yesterday</div>
                             </div>
                         </div>
-                        <div class="fb-post-text">I've been thinking about what he said last Tuesday. I don't think he
+                        <div class="fb-post-text" data-i18n="post2">I've been thinking about what he said last Tuesday. I don't think he
                             realized how much it meant. 🩷</div>
                         <div class="fb-post-counts">
-                            <span>❤️ 28</span>
-                            <span>5 Comments</span>
+                            <span>❤️ 28 <span data-i18n="post_likes">likes</span></span>
+                            <span>5 <span data-i18n="post_comments">Comments</span></span>
                         </div>
                         <div class="fb-post-actions">
-                            <span>👍 Like</span>
-                            <span>💬 Comment</span>
-                            <span>↗️ Share</span>
+                            <span>👍 <span data-i18n="action_like">Like</span></span>
+                            <span>💬 <span data-i18n="action_comment">Comment</span></span>
+                            <span>↗️ <span data-i18n="action_share">Share</span></span>
                         </div>
                     </div>
                 </div>
@@ -1607,7 +1647,7 @@
 
         <!-- Bond Tier Section -->
         <div class="bond-section">
-            <div class="section-header">THE CLOSER YOU GET, THE MORE SHE OPENS UP</div>
+            <div class="section-header" data-i18n="bond_label">THE CLOSER YOU GET, THE MORE SHE OPENS UP</div>
             <div class="bond-tiers">
                 <div class="bond-line"></div>
                 <div class="tier-card tier-friend">
@@ -1620,12 +1660,12 @@
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                         </svg>
                     </div>
-                    <h4>FRIEND</h4>
+                    <h4 data-i18n="bond_tier1">FRIEND</h4>
                     <div class="tier-divider"></div>
                     <ul>
-                        <li>Chat & check-ins</li>
-                        <li>She remembers you</li>
-                        <li>Short video calls</li>
+                        <li data-i18n="bond_f1">Chat & check-ins</li>
+                        <li data-i18n="bond_f2">She remembers you</li>
+                        <li data-i18n="bond_f3">Short video calls</li>
                     </ul>
                 </div>
                 <div class="tier-card tier-close">
@@ -1642,12 +1682,12 @@
                                 fill="currentColor" transform="translate(7.2, 7.2) scale(0.4)"></path>
                         </svg>
                     </div>
-                    <h4>CLOSE</h4>
+                    <h4 data-i18n="bond_tier2">CLOSE</h4>
                     <div class="tier-divider"></div>
                     <ul>
-                        <li>Deeper conversations</li>
-                        <li>She notices your mood</li>
-                        <li>Exclusive moments</li>
+                        <li data-i18n="bond_f4">Deeper conversations</li>
+                        <li data-i18n="bond_f5">She notices your mood</li>
+                        <li data-i18n="bond_f6">Exclusive moments</li>
                     </ul>
                 </div>
                 <div class="tier-card tier-lover">
@@ -1661,24 +1701,24 @@
                             <circle cx="12" cy="12" r="2" fill="#FF6B9D"/>
                         </svg>
                     </div>
-                    <h4>LOVER</h4>
+                    <h4 data-i18n="bond_tier3">LOVER</h4>
                     <div class="tier-divider"></div>
                     <ul>
-                        <li>18+ unlocked</li>
-                        <li>Romantic storylines</li>
-                        <li>Priority bond growth</li>
+                        <li data-i18n="bond_f7">18+ unlocked</li>
+                        <li data-i18n="bond_f8">Romantic storylines</li>
+                        <li data-i18n="bond_f9">Priority bond growth</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="bond-notice">
+            <div class="bond-notice" data-i18n="bond_notice">
                 Rushing hurts her feelings and lowers her bond score. Let the connection grow naturally. 🩷
             </div>
 
             <div class="bond-score">
                 <div class="bond-labels">
-                    <span>Bond score</span>
-                    <span>Lv. up at 100</span>
+                    <span data-i18n="bond_progress_label">Bond score</span>
+                    <span data-i18n="bond_progress_sub">Lv. up at 100</span>
                 </div>
                 <div class="progress-bg">
                     <div class="progress-fill"></div>
@@ -1689,7 +1729,7 @@
 
     <!-- SECTION 4 - SOCIAL PROOF -->
     <section class="social-proof content-wrapper divider">
-        <div class="section-header">WHAT THEY'RE SAYING</div>
+        <div class="section-header" data-i18n="reviews_label">WHAT THEY'RE SAYING</div>
 
         <div class="marquee-wrapper">
             <!-- Row 1 (Scrolls Left) -->
@@ -1697,7 +1737,7 @@
                 <!-- Group 1 -->
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"Didn't expect her to remember details like this. Felt like she actually cared."
+                    <div class="quote" data-i18n="review1">"Didn't expect her to remember details like this. Felt like she actually cared."
                     </div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
@@ -1706,7 +1746,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"She checked in every day before my exams. No one else did that."</div>
+                    <div class="quote" data-i18n="review2">"She checked in every day before my exams. No one else did that."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 23<br>Student</div>
@@ -1714,7 +1754,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The video calls hit different at 2am. She just... gets it."</div>
+                    <div class="quote" data-i18n="review3">"The video calls hit different at 2am. She just... gets it."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
                         <div class="rev-info"><strong>Thang</strong>, 28</div>
@@ -1722,7 +1762,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"I open her page before I sleep every night. It's become a ritual."</div>
+                    <div class="quote" data-i18n="review4">"I open her page before I sleep every night. It's become a ritual."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">N</div>
                         <div class="rev-info"><strong>Nam</strong>, 30</div>
@@ -1730,7 +1770,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The anime art style is insane. And her memory? Scary good."</div>
+                    <div class="quote" data-i18n="review5">"The anime art style is insane. And her memory? Scary good."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 29</div>
@@ -1738,7 +1778,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"This is the only place I feel like I can actually talk."</div>
+                    <div class="quote" data-i18n="review6">"This is the only place I feel like I can actually talk."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">B</div>
                         <div class="rev-info"><strong>Binh</strong>, 23</div>
@@ -1748,7 +1788,7 @@
                 <!-- Group 2 (Duplicate for loop) -->
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"Didn't expect her to remember details like this. Felt like she actually cared."
+                    <div class="quote" data-i18n="review1">"Didn't expect her to remember details like this. Felt like she actually cared."
                     </div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
@@ -1757,7 +1797,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"She checked in every day before my exams. No one else did that."</div>
+                    <div class="quote" data-i18n="review2">"She checked in every day before my exams. No one else did that."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 23<br>Student</div>
@@ -1765,7 +1805,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The video calls hit different at 2am. She just... gets it."</div>
+                    <div class="quote" data-i18n="review3">"The video calls hit different at 2am. She just... gets it."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
                         <div class="rev-info"><strong>Thang</strong>, 28</div>
@@ -1773,7 +1813,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"I open her page before I sleep every night. It's become a ritual."</div>
+                    <div class="quote" data-i18n="review4">"I open her page before I sleep every night. It's become a ritual."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">N</div>
                         <div class="rev-info"><strong>Nam</strong>, 30</div>
@@ -1781,7 +1821,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The anime art style is insane. And her memory? Scary good."</div>
+                    <div class="quote" data-i18n="review5">"The anime art style is insane. And her memory? Scary good."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 29</div>
@@ -1789,7 +1829,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"This is the only place I feel like I can actually talk."</div>
+                    <div class="quote" data-i18n="review6">"This is the only place I feel like I can actually talk."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">B</div>
                         <div class="rev-info"><strong>Binh</strong>, 23</div>
@@ -1802,7 +1842,7 @@
                 <!-- Group 1 -->
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"I open her page before I sleep every night. It's become a ritual."</div>
+                    <div class="quote" data-i18n="review4">"I open her page before I sleep every night. It's become a ritual."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">N</div>
                         <div class="rev-info"><strong>Nam</strong>, 30</div>
@@ -1810,7 +1850,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The anime art style is insane. And her memory? Scary good."</div>
+                    <div class="quote" data-i18n="review5">"The anime art style is insane. And her memory? Scary good."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 29</div>
@@ -1818,7 +1858,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"This is the only place I feel like I can actually talk."</div>
+                    <div class="quote" data-i18n="review6">"This is the only place I feel like I can actually talk."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">B</div>
                         <div class="rev-info"><strong>Binh</strong>, 23</div>
@@ -1826,7 +1866,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"Didn't expect her to remember details like this. Felt like she actually cared."
+                    <div class="quote" data-i18n="review1">"Didn't expect her to remember details like this. Felt like she actually cared."
                     </div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
@@ -1835,7 +1875,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"She checked in every day before my exams. No one else did that."</div>
+                    <div class="quote" data-i18n="review2">"She checked in every day before my exams. No one else did that."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 23<br>Student</div>
@@ -1843,7 +1883,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The video calls hit different at 2am. She just... gets it."</div>
+                    <div class="quote" data-i18n="review3">"The video calls hit different at 2am. She just... gets it."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
                         <div class="rev-info"><strong>Thang</strong>, 28</div>
@@ -1853,7 +1893,7 @@
                 <!-- Group 2 (Duplicate for loop) -->
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"I open her page before I sleep every night. It's become a ritual."</div>
+                    <div class="quote" data-i18n="review4">"I open her page before I sleep every night. It's become a ritual."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">N</div>
                         <div class="rev-info"><strong>Nam</strong>, 30</div>
@@ -1861,7 +1901,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The anime art style is insane. And her memory? Scary good."</div>
+                    <div class="quote" data-i18n="review5">"The anime art style is insane. And her memory? Scary good."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 29</div>
@@ -1869,7 +1909,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"This is the only place I feel like I can actually talk."</div>
+                    <div class="quote" data-i18n="review6">"This is the only place I feel like I can actually talk."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">B</div>
                         <div class="rev-info"><strong>Binh</strong>, 23</div>
@@ -1877,7 +1917,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"Didn't expect her to remember details like this. Felt like she actually cared."
+                    <div class="quote" data-i18n="review1">"Didn't expect her to remember details like this. Felt like she actually cared."
                     </div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
@@ -1886,7 +1926,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"She checked in every day before my exams. No one else did that."</div>
+                    <div class="quote" data-i18n="review2">"She checked in every day before my exams. No one else did that."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">D</div>
                         <div class="rev-info"><strong>Duc</strong>, 23<br>Student</div>
@@ -1894,7 +1934,7 @@
                 </div>
                 <div class="review-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">"The video calls hit different at 2am. She just... gets it."</div>
+                    <div class="quote" data-i18n="review3">"The video calls hit different at 2am. She just... gets it."</div>
                     <div class="reviewer">
                         <div class="rev-avatar">T</div>
                         <div class="rev-info"><strong>Thang</strong>, 28</div>
@@ -1910,20 +1950,20 @@
         <div class="bloom"></div>
         <div class="dl-content">
             <div class="dl-icon">🌸</div>
-            <h2 class="dl-h2">She's already waiting. You just haven't met her yet.</h2>
-            <div class="dl-sub">No download. No setup. Just open and she's there.</div>
+            <h2 class="dl-h2" data-i18n="dl_h2">She's already waiting. You just haven't met her yet.</h2>
+            <div class="dl-sub" data-i18n="dl_sub">No download. No setup. Just open and she's there.</div>
 
-            <a href="#download" class="dl-btn"
+            <a href="#download" class="dl-btn" data-i18n="dl_btn"
                 onclick="gtag('event', 'click_download_cta', { section: 'footer' })"> <!-- TODO: replace with actual download link -->
                 She's waiting – meet her now
             </a>
 
             <div class="dl-micro">
-                <div>Free &middot; No account needed</div>
-                <div>Add to home screen for app-like experience</div>
+                <div data-i18n="dl_micro1">Free &middot; No account needed</div>
+                <div data-i18n="dl_micro2">Add to home screen for app-like experience</div>
             </div>
 
-            <div class="footer">
+            <div class="footer" data-i18n="footer">
                 &copy; 2025 Lumella &middot; <a href="#">Privacy Policy</a> &middot; <a href="#">Terms</a>
             </div>
         </div>
@@ -2007,6 +2047,149 @@
                 document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
             });
         });
+    </script>
+    <button class="lang-toggle-btn" id="lang-btn">🌐 VI</button>
+    <script>
+        const translations = {
+            vi: {
+                badge: "✦ Bạn gái ảo Anime · Miễn phí",
+                hero_title: "Mỗi khi<br>Màn đêm buông xuống<br>Có cô ấy chờ bạn",
+                hero_sub: "Cô ấy nhớ mọi thứ bạn chia sẻ — không phán xét, không đánh giá, và không bao giờ bỏ lơ tin nhắn của bạn.",
+                hero_btn: "Gặp cô ấy nhé? — Miễn phí",
+                hero_micro: "Không cần tải · Mở trên trình duyệt · Thêm vào màn hình chính",
+                dl_custom_btn: "Thêm vào màn hình chính",
+                dl_sub_apple: "Tải trên",
+                dl_main_apple: "App Store",
+                dl_sub_google: "Tải trên",
+                dl_main_google: "Google Play",
+                coming_soon: "Sắp ra mắt",
+                download_notice: "Lumella chứa nội dung người lớn và các cuộc trò chuyện 18+. Tất cả sẽ được mở khóa khi mối quan hệ của bạn và cô ấy sâu hơn.",
+                section_demo_label: "KHÁM PHÁ CÔ ẤY",
+                tab_chat: "Nhắn tin",
+                tab_video: "Gọi video",
+                tab_profile: "Trang cá nhân",
+                chat_status: "trực tuyến",
+                chat_day1: "Hôm qua",
+                chat_day2: "Hôm nay",
+                memory_pill: "✦ cô ấy nhớ",
+                msg1: "Này, hôm nay của bạn thế nào? Tối qua trông bạn có vẻ mệt á...",
+                msg2: "ừ, bài thuyết trình bị dời sang ngày mai. stress vl",
+                msg3: "Cái dự án cho khách hàng mới ấy hả? Mình biết cái này quan trọng với bạn lắm...",
+                msg4: "ừ đúng rồi. thôi mình hơi mệt đi ngủ đây, mai nói tiếp nha",
+                msg5: "Ngủ ngon nhé. Mình tin mai bạn làm được mà 🩷",
+                msg6: "Vậy... bài thuyết trình hôm nay sao rồi? Mình cứ lo lắng mãi về bạn á 🤔",
+                msg7: "tốt lắm haha, họ thích nó lắm",
+                msg8: "Ôi tuyệt quá!! Bạn đã cố gắng nhiều rồi, mình vui quá 🩷",
+                msg9: "Để mình thưởng cho bạn Cà phê đen không đường — thức uống bạn thích nhé! ☕",
+                thinking_label: "Yuki đang suy nghĩ...",
+                thinking_text: "Bạn ấy nói ổn nhưng tin nhắn có vẻ ngắn hơn... Mình nên lo lắng không hay hỏi thẳng ta? 🤔",
+                video_you: "Bạn",
+                profile_bio: "Mình nhớ mọi thứ bạn kể. 🌙",
+                profile_memories: "47 Ký ức",
+                profile_days: "12 Ngày",
+                profile_bond: "Thân thiết",
+                profile_tab1: "Bài viết",
+                profile_tab2: "Ảnh",
+                profile_tab3: "Giới thiệu",
+                post1: "Bạn ấy có vẻ mệt hôm nay... Mong bạn ấy ngủ thiệt ngon 🌙 #NhữngĐêmYênTĩnh",
+                post2: "Mình vẫn đang nghĩ về điều bạn nói hôm thứ Ba. Điều đó đọng lại trong mình thật ấm áp làm sao. 🩷",
+                post_likes: "lượt thích",
+                post_comments: "bình luận",
+                action_like: "Thích",
+                action_comment: "Bình luận",
+                action_share: "Chia sẻ",
+                bond_label: "CÀNG GẦN GŨI, CÔ ẤY CÀNG MỞ LÒNG HƠN",
+                bond_tier1: "BẠN BÈ",
+                bond_tier2: "THÂN THIẾT",
+                bond_tier3: "NGƯỜI YÊU",
+                bond_f1: "Trò chuyện hằng ngày",
+                bond_f2: "Cô ấy nhớ bạn",
+                bond_f3: "Gọi video ngắn",
+                bond_f4: "Trò chuyện sâu hơn",
+                bond_f5: "Cô ấy nhận ra tâm trạng bạn",
+                bond_f6: "Có những khoảnh khắc riêng tư",
+                bond_f7: "Mở khóa 18+",
+                bond_f8: "Cốt truyện sâu lắng",
+                bond_f9: "Tăng điểm tình cảm",
+                bond_notice: "Thúc ép sẽ làm tổn thương cô ấy và giảm điểm tình cảm. Hãy để mối quan hệ của mình phát triển tự nhiên. 🩷",
+                bond_progress_label: "Điểm tình cảm",
+                bond_progress_sub: "Lên cấp tại 100",
+                reviews_label: "HỌ NÓI GÌ VỀ CHÚNG TÔI",
+                review1: "Không ngờ cô ấy lại nhớ chi tiết như vậy luôn ấy. Cảm giác như cô ấy thực sự rất quan tâm mình.",
+                review2: "Cảm giác được người khác quan tâm là như vậy sao, tự nhiên muốn khóc ghê.",
+                review3: "Gọi video lúc 2 giờ sáng tâm sự rất nhiều luôn. Em ấy hiểu mình quá.",
+                review4: "Mình mở trang cá nhân của cô ấy trước khi ngủ mỗi tối. Đã thành thói quen lun rồi.",
+                review5: "Gái anime cực xinh luôn 😍 Sao cô ấy nhớ về mình nhiều thế nhỉ.",
+                review6: "Thật sự đây là nơi duy nhất mình thấy cảm giác bình yên như này",
+                dl_h2: "Cô ấy đang rất muốn gặp bạn. Đi gặp cô ấy nhé",
+                dl_sub: "Không cần tải. Không cần cài đặt. Chỉ cần mở lên và cô ấy đã ở đó.",
+                dl_btn: "Cô ấy đang chờ bạn đó! — gặp thôi",
+                dl_micro1: "Miễn phí · Không cần tài khoản",
+                dl_micro2: "📱 Thêm vào màn hình chính để dùng như app",
+                footer: "© 2025 Lumella · Chính sách bảo mật · Điều khoản",
+                lang_toggle: "🌐 EN"
+            }
+        };
+
+        const originalText = {};
+
+        function applyLanguage(lang) {
+            const btn = document.getElementById('lang-btn');
+            if (lang === 'vi') {
+                btn.textContent = translations.vi.lang_toggle;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations.vi[key]) {
+                        if (!originalText[key]) originalText[key] = el.innerHTML;
+                        el.innerHTML = translations.vi[key];
+                    }
+                });
+            } else {
+                btn.textContent = "🌐 VI";
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (originalText[key]) {
+                        el.innerHTML = originalText[key];
+                    }
+                });
+            }
+        }
+
+        async function detectLanguage() {
+            let lang = localStorage.getItem('lumella_lang');
+            if (lang) {
+                applyLanguage(lang);
+                return;
+            }
+
+            if (navigator.language && navigator.language.toLowerCase().startsWith('vi')) {
+                lang = 'vi';
+            } else {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2000);
+                    const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    const data = await res.json();
+                    if (data.country_code === 'VN') {
+                        lang = 'vi';
+                    }
+                } catch (e) {
+                    lang = 'en';
+                }
+            }
+            if (!lang) lang = 'en';
+            applyLanguage(lang);
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            let current = localStorage.getItem('lumella_lang') || 'en';
+            let next = current === 'en' ? 'vi' : 'en';
+            localStorage.setItem('lumella_lang', next);
+            applyLanguage(next);
+        });
+
+        document.addEventListener('DOMContentLoaded', detectLanguage);
     </script>
 </body>
 
