@@ -14,10 +14,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@1,400;1,600&display=swap"
         rel="stylesheet">
-        
-    <!-- Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 
     <style>
         /* Base Variables & Reset */
@@ -2196,75 +2192,48 @@
         document.addEventListener('DOMContentLoaded', detectLanguage);
     </script>
 
-    <!-- Firebase Initialization & Tracking -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDf1rssyVbpaj3egO0-rnRyjsAPWKsfpDE",
-            authDomain: "veluna-48399.firebaseapp.com",
-            projectId: "veluna-48399",
-            appId: "1:880089957877:web:726eadb11382a8b6b3ccbc",
-            measurementId: "G-9CPF3ZVE28"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const analytics = firebase.analytics();
+      const firebaseConfig = {
+        apiKey: "AIzaSyDf1rssyVbpaj3egO0-rnRyjsAPWKsfpDE",
+        authDomain: "veluna-48399.firebaseapp.com",
+        projectId: "veluna-48399",
+        appId: "1:880089957877:web:726eadb11382a8b6b3ccbc",
+        measurementId: "G-9CPF3ZVE28"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const analytics = firebase.analytics();
 
-        // page_viewed
-        document.addEventListener('DOMContentLoaded', () => {
-            analytics.logEvent('page_viewed');
-        });
+      document.addEventListener('DOMContentLoaded', () => {
+        analytics.logEvent('page_viewed');
 
-        // hero_cta_clicked
         const heroBtn = document.querySelector('.hero-btn');
-        if (heroBtn) {
-            heroBtn.addEventListener('click', () => {
-                analytics.logEvent('hero_cta_clicked');
-            });
-        }
+        if (heroBtn) heroBtn.addEventListener('click', () => analytics.logEvent('hero_cta_clicked'));
 
-        // tab_switched
-        const demoTabs = document.querySelectorAll('.tab');
-        demoTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                analytics.logEvent('tab_switched', { tab_name: tab.dataset.tab });
-            });
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.addEventListener('click', () => analytics.logEvent('tab_switched', { tab_name: tab.dataset.tab }));
         });
 
-        // download_homescreen_clicked
         const dlBtnCustom = document.querySelector('.dl-btn-custom');
-        if (dlBtnCustom) {
-            dlBtnCustom.addEventListener('click', () => {
-                analytics.logEvent('download_homescreen_clicked');
-            });
-        }
+        if (dlBtnCustom) dlBtnCustom.addEventListener('click', () => analytics.logEvent('download_homescreen_clicked'));
 
-        // download_appstore_clicked & download_googleplay_clicked
-        const dlBtnStores = document.querySelectorAll('.dl-btn-store');
-        dlBtnStores.forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (btn.getAttribute('href') === '#app-store') {
-                    analytics.logEvent('download_appstore_clicked');
-                } else if (btn.getAttribute('href') === '#google-play') {
-                    analytics.logEvent('download_googleplay_clicked');
-                }
-            });
+        document.querySelectorAll('.dl-btn-store').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (btn.getAttribute('href') === '#app-store') analytics.logEvent('download_appstore_clicked');
+            else if (btn.getAttribute('href') === '#google-play') analytics.logEvent('download_googleplay_clicked');
+          });
         });
 
-        // footer_cta_clicked
         const footerCta = document.querySelector('#download .dl-btn');
-        if (footerCta) {
-            footerCta.addEventListener('click', () => {
-                analytics.logEvent('footer_cta_clicked');
-            });
-        }
+        if (footerCta) footerCta.addEventListener('click', () => analytics.logEvent('footer_cta_clicked'));
 
-        // language_switched
-        const trackingLangBtn = document.getElementById('lang-btn');
-        if (trackingLangBtn) {
-            trackingLangBtn.addEventListener('click', () => {
-                let newLang = localStorage.getItem('lumella_lang') || 'en';
-                analytics.logEvent('language_switched', { to_language: newLang });
-            });
-        }
+        const langBtn = document.getElementById('lang-btn');
+        if (langBtn) langBtn.addEventListener('click', () => {
+          const newLang = localStorage.getItem('lumella_lang') || 'en';
+          analytics.logEvent('language_switched', { to_language: newLang });
+        });
+      });
     </script>
 </body>
 
