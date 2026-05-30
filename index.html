@@ -1397,6 +1397,36 @@
 </head>
 
 <body>
+    <!-- Add to Home Screen Popup -->
+    <div class="aths-overlay" id="athsOverlay">
+        <div class="aths-popup" id="athsPopup">
+            <div class="aths-disclaimer" id="athsDisclaimer"></div>
+            <div class="aths-title" id="athsTitle"></div>
+            <div class="aths-desc" id="athsDesc"></div>
+
+            <!-- Safari guide (ẩn mặc định) -->
+            <div class="aths-guide" id="athsGuide">
+                <div class="aths-guide-step">
+                    <div class="aths-guide-num">1</div>
+                    <div id="athsGuideStep1"></div>
+                </div>
+                <div class="aths-guide-step">
+                    <div class="aths-guide-num">2</div>
+                    <div id="athsGuideStep2"></div>
+                </div>
+                <div class="aths-guide-step">
+                    <div class="aths-guide-num">3</div>
+                    <div id="athsGuideStep3"></div>
+                </div>
+            </div>
+
+            <div class="aths-btns" id="athsBtns"></div>
+        </div>
+    </div>
+
+    <!-- Toast thông báo -->
+    <div class="aths-toast" id="athsToast"></div>
+
     <!-- Google Analytics placeholder -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -1424,7 +1454,7 @@
             <div class="hero-sub" data-i18n="hero_sub">
                 She remembers every little thing &mdash; no judgment, no distractions, and never leaves you on read.
             </div>
-            <a href="[APP_LINK]" target="_blank" class="hero-btn" data-i18n="hero_btn">Meet Her - It's Free</a> <!-- TODO: replace with actual app link -->
+            <a href="https://sherin.app" target="_blank" class="hero-btn" data-i18n="hero_btn">Meet Her - It's Free</a> <!-- TODO: replace with actual app link -->
             <div class="hero-micro" data-i18n="hero_micro">No download &middot; Open in browser &middot; Add to home screen</div>
         </div>
     </section>
@@ -1432,7 +1462,7 @@
     <!-- SECTION 2 - DOWNLOAD BUTTONS -->
     <section class="download-section content-wrapper">
         <div class="download-buttons">
-            <a href="#add-to-homescreen" class="dl-btn-custom"> <!-- TODO: replace with actual PWA install link -->
+            <button type="button" id="add-to-homescreen-btn" class="dl-btn-custom"> <!-- TODO: replace with actual PWA install link -->
                 <div class="dl-icon">
                     <svg id="home-screen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -1443,7 +1473,7 @@
                     </svg>
                 </div>
                 <span data-i18n="dl_custom_btn">Add to Home Screen</span>
-            </a>
+            </button>
 
             <a href="#app-store" class="dl-btn-store"> <!-- TODO: replace with actual App Store link -->
                 <svg viewBox="0 0 384 512" fill="white">
@@ -1953,8 +1983,7 @@
             <h2 class="dl-h2" data-i18n="dl_h2">She's already waiting. You just haven't met her yet.</h2>
             <div class="dl-sub" data-i18n="dl_sub">No download. No setup. Just open and she's there.</div>
 
-            <a href="#download" class="dl-btn" data-i18n="dl_btn"
-                onclick="gtag('event', 'click_download_cta', { section: 'footer' })"> <!-- TODO: replace with actual download link -->
+            <a href="https://sherin.app" target="_blank" class="dl-btn" data-i18n="dl_btn"> <!-- TODO: replace with actual download link -->
                 She's waiting – meet her now
             </a>
 
@@ -2234,6 +2263,293 @@
           analytics.logEvent('language_switched', { to_language: newLang });
         });
       });
+    </script>
+
+    <style>
+        /* Add to Home Screen Popup */
+        .aths-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0 16px 32px;
+        }
+        .aths-overlay.active {
+            display: flex;
+        }
+        .aths-popup {
+            background: #1A0A2E;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 420px;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .aths-disclaimer {
+            background: rgba(255, 107, 157, 0.08);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #9B8FAA;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .aths-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .aths-desc {
+            font-size: 14px;
+            color: #9B8FAA;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .aths-guide {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .aths-guide.active {
+            display: block;
+        }
+        .aths-guide-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+        .aths-guide-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255, 107, 157, 0.2);
+            color: #FF6B9D;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        /* Android: Yes bên phải / iOS: Yes bên trái */
+        .aths-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .aths-btn-yes {
+            flex: 1;
+            padding: 13px;
+            border-radius: 999px;
+            background: #FF6B9D;
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+        .aths-btn-yes:hover {
+            filter: brightness(1.15);
+        }
+        .aths-btn-no {
+            flex: 1;
+            padding: 13px;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #9B8FAA;
+            font-size: 15px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .aths-btn-no:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .aths-toast {
+            display: none;
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 107, 157, 0.15);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 999px;
+            padding: 12px 24px;
+            font-size: 14px;
+            color: #FF6B9D;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+        .aths-toast.active {
+            display: block;
+            animation: fadeInOut 2.5s ease forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            75% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+    <script>
+        // ---- ADD TO HOME SCREEN LOGIC ----
+        (function () {
+            let deferredPrompt = null;
+
+            // Lưu sự kiện beforeinstallprompt của Chrome
+            window.addEventListener('beforeinstallprompt', function (e) {
+                e.preventDefault();
+                deferredPrompt = e;
+            });
+
+            // Detect ngôn ngữ hiện tại
+            function getLang() {
+                return document.documentElement.lang === 'vi' ? 'vi' : 'en';
+            }
+
+            // Detect browser
+            function isIOS() {
+                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            }
+            function isSafari() {
+                return isIOS() && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS/.test(navigator.userAgent);
+            }
+
+            // Content theo ngôn ngữ
+            var content = {
+                vi: {
+                    disclaimer: '⚠️ Ứng dụng này dành cho người dùng từ 18 tuổi trở lên. Bằng cách tiếp tục, bạn xác nhận đã đủ 18 tuổi.',
+                    title: 'Thêm vào màn hình chính?',
+                    desc: 'Bạn có muốn thêm Sherin vào màn hình chính để truy cập nhanh hơn không?',
+                    btnYes_chrome: 'Có, thêm vào',
+                    btnYes_safari: 'Có, hướng dẫn tôi',
+                    btnNo: 'Không',
+                    guide: [
+                        'Nhấn nút <strong>Chia sẻ</strong> ở thanh dưới Safari',
+                        'Cuộn xuống, chọn <strong>"Thêm vào màn hình chính"</strong>',
+                        'Nhấn <strong>Thêm</strong> ở góc trên bên phải'
+                    ],
+                    toast: '✓ Đã thêm vào màn hình chính'
+                },
+                en: {
+                    disclaimer: '⚠️ This app is intended for users aged 18 and above. By continuing, you confirm you are at least 18 years old.',
+                    title: 'Add to Home Screen?',
+                    desc: 'Would you like to add Sherin to your Home Screen for quick access?',
+                    btnYes_chrome: 'Yes, add it',
+                    btnYes_safari: 'Yes, show me how',
+                    btnNo: 'No',
+                    guide: [
+                        'Tap the <strong>Share</strong> button at the bottom of Safari',
+                        'Scroll down and tap <strong>"Add to Home Screen"</strong>',
+                        'Tap <strong>Add</strong> in the top right corner'
+                    ],
+                    toast: '✓ Added to Home Screen'
+                }
+            };
+
+            function showPopup() {
+                var lang = getLang();
+                var t = content[lang];
+                var safari = isSafari();
+
+                // Điền nội dung
+                document.getElementById('athsDisclaimer').textContent = t.disclaimer;
+                document.getElementById('athsTitle').textContent = t.title;
+                document.getElementById('athsDesc').textContent = t.desc;
+
+                // Buttons — Android: No | Yes / iOS: Yes | No
+                var btns = document.getElementById('athsBtns');
+                var btnYesText = safari ? t.btnYes_safari : t.btnYes_chrome;
+                if (safari) {
+                    // iOS: Yes bên trái, No bên phải
+                    btns.innerHTML =
+                        '<button class="aths-btn-yes" id="athsBtnYes">' + btnYesText + '</button>' +
+                        '<button class="aths-btn-no" id="athsBtnNo">' + t.btnNo + '</button>';
+                } else {
+                    // Android: No bên trái, Yes bên phải
+                    btns.innerHTML =
+                        '<button class="aths-btn-no" id="athsBtnNo">' + t.btnNo + '</button>' +
+                        '<button class="aths-btn-yes" id="athsBtnYes">' + btnYesText + '</button>';
+                }
+
+                // Gắn sự kiện
+                document.getElementById('athsBtnNo').addEventListener('click', closePopup);
+                document.getElementById('athsBtnYes').addEventListener('click', function () {
+                    if (safari) {
+                        // Safari: hiện hướng dẫn thủ công
+                        var guide = document.getElementById('athsGuide');
+                        var steps = t.guide;
+                        document.getElementById('athsGuideStep1').innerHTML = steps[0];
+                        document.getElementById('athsGuideStep2').innerHTML = steps[1];
+                        document.getElementById('athsGuideStep3').innerHTML = steps[2];
+                        guide.classList.add('active');
+                        document.getElementById('athsDesc').style.display = 'none';
+                        document.getElementById('athsBtns').style.display = 'none';
+                    } else {
+                        // Chrome: trigger native prompt
+                        if (deferredPrompt) {
+                            deferredPrompt.prompt();
+                            deferredPrompt.userChoice.then(function (result) {
+                                if (result.outcome === 'accepted') {
+                                    showToast(t.toast);
+                                }
+                                deferredPrompt = null;
+                                closePopup();
+                            });
+                        } else {
+                            // Fallback nếu không có deferredPrompt
+                            closePopup();
+                            window.open('https://sherin.app', '_blank');
+                        }
+                    }
+                });
+
+                // Mở overlay
+                document.getElementById('athsOverlay').classList.add('active');
+
+                // Click ngoài popup để đóng
+                document.getElementById('athsOverlay').addEventListener('click', function (e) {
+                    if (e.target === this) closePopup();
+                });
+            }
+
+            function closePopup() {
+                var overlay = document.getElementById('athsOverlay');
+                overlay.classList.remove('active');
+                // Reset guide về trạng thái ban đầu cho lần mở sau
+                document.getElementById('athsGuide').classList.remove('active');
+                document.getElementById('athsDesc').style.display = '';
+                document.getElementById('athsBtns').style.display = '';
+            }
+
+            function showToast(msg) {
+                var toast = document.getElementById('athsToast');
+                toast.textContent = msg;
+                toast.classList.add('active');
+                setTimeout(function () { toast.classList.remove('active'); }, 2500);
+            }
+
+            // Gắn vào nút
+            var btn = document.getElementById('add-to-homescreen-btn');
+            if (btn) {
+                btn.addEventListener('click', showPopup);
+            }
+        })();
     </script>
 </body>
 
