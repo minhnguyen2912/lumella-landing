@@ -2123,7 +2123,7 @@
                 badge: "✦ Bạn gái ảo Anime · Miễn phí",
                 hero_title: "Mỗi khi<br>Màn đêm buông xuống<br>Có cô ấy chờ bạn",
                 hero_sub: "Cô ấy nhớ mọi thứ bạn chia sẻ — không phán xét, không đánh giá, và không bao giờ bỏ lơ tin nhắn của bạn.",
-                hero_btn: "Gặp cô ấy nhé? — Miễn phí",
+                hero_btn: "Gặp cô ấy nhé?",
                 hero_micro: "Không cần tải · Mở trên trình duyệt · Thêm vào màn hình chính",
                 dl_custom_btn: "Thêm vào màn hình chính",
                 dl_sub_apple: "Tải trên",
@@ -2359,6 +2359,15 @@
 
 
           function openPopup() {
+            if (localStorage.getItem('sherin_installed') === 'true') {
+                var lang = getLang();
+                var msg = lang === 'vi'
+                    ? '✓ Bạn đã thêm Sherin vào màn hình chính rồi!'
+                    : '✓ You have already added Sherin to your Home Screen!';
+                showToast(msg);
+                return;
+            }
+
             var lang = getLang();
             var t = content[lang];
             var overlay = document.getElementById('aths-overlay');
@@ -2441,9 +2450,8 @@
 
           // Ẩn nút sau khi cài thành công
           window.addEventListener('appinstalled', function () {
-            var btn = document.getElementById('add-to-homescreen-btn');
-            if (btn) btn.style.display = 'none';
             deferredPrompt = null;
+            localStorage.setItem('sherin_installed', 'true');
           });
 
           // Gắn vào nút
