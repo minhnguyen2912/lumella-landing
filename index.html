@@ -2315,7 +2315,11 @@
 
           // Detect ngôn ngữ hiện tại của trang
           function getLang() {
-            return localStorage.getItem('lumella_lang') === 'vi' ? 'vi' : 'en';
+            var stored = localStorage.getItem('lumella_lang');
+            if (stored) return stored;
+            var btn = document.getElementById('lang-btn');
+            if (btn && btn.textContent.indexOf('VI') !== -1) return 'vi';
+            return 'en';
           }
 
           // Nội dung theo ngôn ngữ
@@ -2328,7 +2332,7 @@
               btnYes_ios: 'Có, hướng dẫn tôi',
               btnNo: 'Không',
               steps: [
-                'Nhấn nút <strong>Share</strong> (icon mũi tên lên) hoặc <strong>...</strong> trên thanh Safari / Chrome / trình duyệt đang dùng',
+                'Nhấn nút <strong>Share</strong> (icon mũi tên lên) hoặc nút <strong style="display:inline-flex;align-items:center;justify-content:center;border:1.5px solid currentColor;border-radius:4px;padding:0 4px;font-size:13px;line-height:1.6;letter-spacing:2px;">···</strong> trên thanh trình duyệt',
                 'Cuộn xuống, chọn <strong>"Thêm vào màn hình chính"</strong>',
                 'Nhấn <strong>Thêm</strong> để xác nhận'
               ],
@@ -2342,7 +2346,7 @@
               btnYes_ios: 'Yes, show me how',
               btnNo: 'No',
               steps: [
-                'Tap the <strong>Share</strong> button (arrow icon) or <strong>...</strong> in your Safari / Chrome / browser toolbar',
+                'Tap the <strong>Share</strong> button (arrow icon) or the <strong style="display:inline-flex;align-items:center;justify-content:center;border:1.5px solid currentColor;border-radius:4px;padding:0 4px;font-size:13px;line-height:1.6;letter-spacing:2px;">···</strong> button in your browser toolbar',
                 'Scroll down and tap <strong>"Add to Home Screen"</strong>',
                 'Tap <strong>Add</strong> to confirm'
               ],
@@ -2359,14 +2363,6 @@
 
 
           function openPopup() {
-            if (localStorage.getItem('sherin_installed') === 'true') {
-                var lang = getLang();
-                var msg = lang === 'vi'
-                    ? '✓ Bạn đã thêm Sherin vào màn hình chính rồi!'
-                    : '✓ You have already added Sherin to your Home Screen!';
-                showToast(msg);
-                return;
-            }
 
             var lang = getLang();
             var t = content[lang];
