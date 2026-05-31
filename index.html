@@ -2315,7 +2315,7 @@
 
           // Detect ngôn ngữ hiện tại của trang
           function getLang() {
-            return document.documentElement.lang === 'vi' ? 'vi' : 'en';
+            return localStorage.getItem('lumella_lang') === 'vi' ? 'vi' : 'en';
           }
 
           // Nội dung theo ngôn ngữ
@@ -2328,9 +2328,9 @@
               btnYes_ios: 'Có, hướng dẫn tôi',
               btnNo: 'Không',
               steps: [
-                'Nhấn nút <strong>Chia sẻ</strong> ở thanh dưới Safari',
+                'Nhấn nút <strong>Share</strong> (icon mũi tên lên) hoặc <strong>...</strong> trên thanh Safari / Chrome / trình duyệt đang dùng',
                 'Cuộn xuống, chọn <strong>"Thêm vào màn hình chính"</strong>',
-                'Nhấn <strong>Thêm</strong> ở góc trên bên phải'
+                'Nhấn <strong>Thêm</strong> để xác nhận'
               ],
               toast: '✓ Đã thêm vào màn hình chính'
             },
@@ -2342,9 +2342,9 @@
               btnYes_ios: 'Yes, show me how',
               btnNo: 'No',
               steps: [
-                'Tap the <strong>Share</strong> button at the bottom of Safari',
+                'Tap the <strong>Share</strong> button (arrow icon) or <strong>...</strong> in your Safari / Chrome / browser toolbar',
                 'Scroll down and tap <strong>"Add to Home Screen"</strong>',
-                'Tap <strong>Add</strong> in the top right corner'
+                'Tap <strong>Add</strong> to confirm'
               ],
               toast: '✓ Added to Home Screen'
             }
