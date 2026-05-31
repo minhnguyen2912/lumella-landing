@@ -1399,7 +1399,7 @@
 
 <body>
 <!-- Add to Homescreen Popup -->
-<div id="aths-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-end;justify-content:center;padding:0 16px 32px;">
+<div id="aths-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-end;justify-content:center;padding:0 16px 32px;">
   <div id="aths-popup" style="background:#1A0A2E;border:1px solid rgba(255,107,157,0.3);border-radius:20px;padding:24px;width:100%;max-width:420px;animation:athsSlideUp 0.3s ease;">
     
     <!-- Disclaimer -->
@@ -1464,35 +1464,7 @@
 }
 .aths-btn-no:hover { border-color: rgba(255,255,255,0.3); }
 </style>
-    <!-- Add to Home Screen Popup -->
-    <div class="aths-overlay" id="athsOverlay">
-        <div class="aths-popup" id="athsPopup">
-            <div class="aths-disclaimer" id="athsDisclaimer"></div>
-            <div class="aths-title" id="athsTitle"></div>
-            <div class="aths-desc" id="athsDesc"></div>
 
-            <!-- Safari guide (ẩn mặc định) -->
-            <div class="aths-guide" id="athsGuide">
-                <div class="aths-guide-step">
-                    <div class="aths-guide-num">1</div>
-                    <div id="athsGuideStep1"></div>
-                </div>
-                <div class="aths-guide-step">
-                    <div class="aths-guide-num">2</div>
-                    <div id="athsGuideStep2"></div>
-                </div>
-                <div class="aths-guide-step">
-                    <div class="aths-guide-num">3</div>
-                    <div id="athsGuideStep3"></div>
-                </div>
-            </div>
-
-            <div class="aths-btns" id="athsBtns"></div>
-        </div>
-    </div>
-
-    <!-- Toast thông báo -->
-    <div class="aths-toast" id="athsToast"></div>
 
     <!-- Google Analytics placeholder -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -2332,147 +2304,7 @@
       });
     </script>
 
-    <style>
-        /* Add to Home Screen Popup */
-        .aths-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 0 16px 32px;
-        }
-        .aths-overlay.active {
-            display: flex;
-        }
-        .aths-popup {
-            background: #1A0A2E;
-            border: 1px solid rgba(255, 107, 157, 0.3);
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            max-width: 420px;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .aths-disclaimer {
-            background: rgba(255, 107, 157, 0.08);
-            border: 1px solid rgba(255, 107, 157, 0.2);
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-size: 12px;
-            color: #9B8FAA;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-        .aths-title {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 17px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-        .aths-desc {
-            font-size: 14px;
-            color: #9B8FAA;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .aths-guide {
-            display: none;
-            margin-bottom: 20px;
-        }
-        .aths-guide.active {
-            display: block;
-        }
-        .aths-guide-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            color: #ffffff;
-            line-height: 1.5;
-        }
-        .aths-guide-num {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: rgba(255, 107, 157, 0.2);
-            color: #FF6B9D;
-            font-size: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        /* Android: Yes bên phải / iOS: Yes bên trái */
-        .aths-btns {
-            display: flex;
-            gap: 10px;
-        }
-        .aths-btn-yes {
-            flex: 1;
-            padding: 13px;
-            border-radius: 999px;
-            background: #FF6B9D;
-            border: none;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: filter 0.2s;
-        }
-        .aths-btn-yes:hover {
-            filter: brightness(1.15);
-        }
-        .aths-btn-no {
-            flex: 1;
-            padding: 13px;
-            border-radius: 999px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #9B8FAA;
-            font-size: 15px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .aths-btn-no:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        .aths-toast {
-            display: none;
-            position: fixed;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 107, 157, 0.15);
-            border: 1px solid rgba(255, 107, 157, 0.3);
-            border-radius: 999px;
-            padding: 12px 24px;
-            font-size: 14px;
-            color: #FF6B9D;
-            z-index: 10000;
-            white-space: nowrap;
-        }
-        .aths-toast.active {
-            display: block;
-            animation: fadeInOut 2.5s ease forwards;
-        }
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            75% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-    </style>
+
     <script>
         // ---- ADD TO HOMESCREEN ----
         (function () {
@@ -2524,13 +2356,7 @@
             deferredPrompt = e;
           });
 
-          // Nếu app đã được cài rồi thì ẩn nút
-          if (
-            window.matchMedia('(display-mode: standalone)').matches ||
-            window.navigator.standalone === true
-          ) {
-            return;
-          }
+
 
           function openPopup() {
             var lang = getLang();
