@@ -7,6 +7,7 @@
     <title>Lumella - Anime AI Companion</title>
     <meta name="description"
         content="Lumella is your anime AI companion. She remembers everything you share, never leaves you on read, and is always there for you.">
+    <link rel="manifest" href="/manifest.json">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1397,6 +1398,72 @@
 </head>
 
 <body>
+<!-- Add to Homescreen Popup -->
+<div id="aths-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-end;justify-content:center;padding:0 16px 32px;">
+  <div id="aths-popup" style="background:#1A0A2E;border:1px solid rgba(255,107,157,0.3);border-radius:20px;padding:24px;width:100%;max-width:420px;animation:athsSlideUp 0.3s ease;">
+    
+    <!-- Disclaimer -->
+    <div id="aths-disclaimer" style="background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:10px;padding:10px 14px;font-size:12px;color:#9B8FAA;line-height:1.5;margin-bottom:16px;"></div>
+    
+    <!-- Title -->
+    <div id="aths-title" style="font-size:17px;font-weight:600;color:#ffffff;margin-bottom:8px;"></div>
+    
+    <!-- Description (ẩn khi hiện guide) -->
+    <div id="aths-desc" style="font-size:14px;color:#9B8FAA;margin-bottom:20px;line-height:1.5;"></div>
+    
+    <!-- Hướng dẫn thủ công iOS (ẩn mặc định) -->
+    <div id="aths-guide" style="display:none;margin-bottom:20px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,107,157,0.2);color:#FF6B9D;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <div id="aths-step1" style="font-size:14px;color:#ffffff;line-height:1.5;padding-top:2px;"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,107,157,0.2);color:#FF6B9D;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+        <div id="aths-step2" style="font-size:14px;color:#ffffff;line-height:1.5;padding-top:2px;"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,107,157,0.2);color:#FF6B9D;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+        <div id="aths-step3" style="font-size:14px;color:#ffffff;line-height:1.5;padding-top:2px;"></div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div id="aths-btns" style="display:flex;gap:10px;"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="aths-toast" style="display:none;position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:rgba(255,107,157,0.15);border:1px solid rgba(255,107,157,0.3);border-radius:999px;padding:12px 24px;font-size:14px;color:#FF6B9D;z-index:10000;white-space:nowrap;"></div>
+
+<style>
+@keyframes athsSlideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes athsFadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+#aths-overlay { display: none; }
+#aths-overlay.active { display: flex; }
+#aths-toast.active { display: block; animation: athsFadeInOut 2.5s ease forwards; }
+.aths-btn-yes {
+  flex: 1; padding: 13px; border-radius: 999px;
+  background: #FF6B9D; border: none; color: white;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: filter 0.2s;
+}
+.aths-btn-yes:hover { filter: brightness(1.15); }
+.aths-btn-no {
+  flex: 1; padding: 13px; border-radius: 999px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.15);
+  color: #9B8FAA; font-size: 15px; cursor: pointer;
+  transition: border-color 0.2s;
+}
+.aths-btn-no:hover { border-color: rgba(255,255,255,0.3); }
+</style>
     <!-- Add to Home Screen Popup -->
     <div class="aths-overlay" id="athsOverlay">
         <div class="aths-popup" id="athsPopup">
@@ -2407,148 +2474,157 @@
         }
     </style>
     <script>
-        // ---- ADD TO HOME SCREEN LOGIC ----
+        // ---- ADD TO HOMESCREEN ----
         (function () {
-            let deferredPrompt = null;
+          var deferredPrompt = null;
 
-            // Lưu sự kiện beforeinstallprompt của Chrome
-            window.addEventListener('beforeinstallprompt', function (e) {
-                e.preventDefault();
-                deferredPrompt = e;
+          // Detect iOS (bất kể browser gì)
+          var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+          // Detect ngôn ngữ hiện tại của trang
+          function getLang() {
+            return document.documentElement.lang === 'vi' ? 'vi' : 'en';
+          }
+
+          // Nội dung theo ngôn ngữ
+          var content = {
+            vi: {
+              disclaimer: '⚠️ Ứng dụng này dành cho người dùng từ 18 tuổi trở lên. Bằng cách tiếp tục, bạn xác nhận đã đủ 18 tuổi.',
+              title: 'Thêm vào màn hình chính?',
+              desc: 'Bạn có muốn thêm Sherin vào màn hình chính để truy cập nhanh hơn không?',
+              btnYes_android: 'Có, thêm vào',
+              btnYes_ios: 'Có, hướng dẫn tôi',
+              btnNo: 'Không',
+              steps: [
+                'Nhấn nút <strong>Chia sẻ</strong> ở thanh dưới Safari',
+                'Cuộn xuống, chọn <strong>"Thêm vào màn hình chính"</strong>',
+                'Nhấn <strong>Thêm</strong> ở góc trên bên phải'
+              ],
+              toast: '✓ Đã thêm vào màn hình chính'
+            },
+            en: {
+              disclaimer: '⚠️ This app is intended for users aged 18 and above. By continuing, you confirm you are at least 18 years old.',
+              title: 'Add to Home Screen?',
+              desc: 'Would you like to add Sherin to your Home Screen for quick access?',
+              btnYes_android: 'Yes, add it',
+              btnYes_ios: 'Yes, show me how',
+              btnNo: 'No',
+              steps: [
+                'Tap the <strong>Share</strong> button at the bottom of Safari',
+                'Scroll down and tap <strong>"Add to Home Screen"</strong>',
+                'Tap <strong>Add</strong> in the top right corner'
+              ],
+              toast: '✓ Added to Home Screen'
+            }
+          };
+
+          // Lắng nghe beforeinstallprompt (Android Chrome)
+          window.addEventListener('beforeinstallprompt', function (e) {
+            e.preventDefault();
+            deferredPrompt = e;
+          });
+
+          // Nếu app đã được cài rồi thì ẩn nút
+          if (
+            window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true
+          ) {
+            return;
+          }
+
+          function openPopup() {
+            var lang = getLang();
+            var t = content[lang];
+            var overlay = document.getElementById('aths-overlay');
+
+            // Điền nội dung
+            document.getElementById('aths-disclaimer').textContent = t.disclaimer;
+            document.getElementById('aths-title').textContent = t.title;
+            document.getElementById('aths-desc').textContent = t.desc;
+
+            // Reset về trạng thái ban đầu
+            document.getElementById('aths-guide').style.display = 'none';
+            document.getElementById('aths-desc').style.display = 'block';
+            var btnsEl = document.getElementById('aths-btns');
+            btnsEl.style.display = 'flex';
+
+            // Buttons — iOS: Yes trái / No phải | Android: No trái / Yes phải
+            var btnYesText = isIOS ? t.btnYes_ios : t.btnYes_android;
+            if (isIOS) {
+              btnsEl.innerHTML =
+                '<button class="aths-btn-yes" id="aths-yes">' + btnYesText + '</button>' +
+                '<button class="aths-btn-no" id="aths-no">' + t.btnNo + '</button>';
+            } else {
+              btnsEl.innerHTML =
+                '<button class="aths-btn-no" id="aths-no">' + t.btnNo + '</button>' +
+                '<button class="aths-btn-yes" id="aths-yes">' + btnYesText + '</button>';
+            }
+
+            // Gắn sự kiện buttons
+            document.getElementById('aths-no').addEventListener('click', closePopup);
+            document.getElementById('aths-yes').addEventListener('click', handleYes);
+
+            // Click ngoài popup để đóng
+            overlay.addEventListener('click', function (e) {
+              if (e.target === overlay) closePopup();
             });
 
-            // Detect ngôn ngữ hiện tại
-            function getLang() {
-                return document.documentElement.lang === 'vi' ? 'vi' : 'en';
-            }
+            overlay.classList.add('active');
+          }
 
-            // Detect browser
-            function isIOS() {
-                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            }
-            function isSafari() {
-                return isIOS() && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS/.test(navigator.userAgent);
-            }
+          function closePopup() {
+            document.getElementById('aths-overlay').classList.remove('active');
+          }
 
-            // Content theo ngôn ngữ
-            var content = {
-                vi: {
-                    disclaimer: '⚠️ Ứng dụng này dành cho người dùng từ 18 tuổi trở lên. Bằng cách tiếp tục, bạn xác nhận đã đủ 18 tuổi.',
-                    title: 'Thêm vào màn hình chính?',
-                    desc: 'Bạn có muốn thêm Sherin vào màn hình chính để truy cập nhanh hơn không?',
-                    btnYes_chrome: 'Có, thêm vào',
-                    btnYes_safari: 'Có, hướng dẫn tôi',
-                    btnNo: 'Không',
-                    guide: [
-                        'Nhấn nút <strong>Chia sẻ</strong> ở thanh dưới Safari',
-                        'Cuộn xuống, chọn <strong>"Thêm vào màn hình chính"</strong>',
-                        'Nhấn <strong>Thêm</strong> ở góc trên bên phải'
-                    ],
-                    toast: '✓ Đã thêm vào màn hình chính'
-                },
-                en: {
-                    disclaimer: '⚠️ This app is intended for users aged 18 and above. By continuing, you confirm you are at least 18 years old.',
-                    title: 'Add to Home Screen?',
-                    desc: 'Would you like to add Sherin to your Home Screen for quick access?',
-                    btnYes_chrome: 'Yes, add it',
-                    btnYes_safari: 'Yes, show me how',
-                    btnNo: 'No',
-                    guide: [
-                        'Tap the <strong>Share</strong> button at the bottom of Safari',
-                        'Scroll down and tap <strong>"Add to Home Screen"</strong>',
-                        'Tap <strong>Add</strong> in the top right corner'
-                    ],
-                    toast: '✓ Added to Home Screen'
-                }
-            };
+          function handleYes() {
+            var lang = getLang();
+            var t = content[lang];
 
-            function showPopup() {
-                var lang = getLang();
-                var t = content[lang];
-                var safari = isSafari();
-
-                // Điền nội dung
-                document.getElementById('athsDisclaimer').textContent = t.disclaimer;
-                document.getElementById('athsTitle').textContent = t.title;
-                document.getElementById('athsDesc').textContent = t.desc;
-
-                // Buttons — Android: No | Yes / iOS: Yes | No
-                var btns = document.getElementById('athsBtns');
-                var btnYesText = safari ? t.btnYes_safari : t.btnYes_chrome;
-                if (safari) {
-                    // iOS: Yes bên trái, No bên phải
-                    btns.innerHTML =
-                        '<button class="aths-btn-yes" id="athsBtnYes">' + btnYesText + '</button>' +
-                        '<button class="aths-btn-no" id="athsBtnNo">' + t.btnNo + '</button>';
-                } else {
-                    // Android: No bên trái, Yes bên phải
-                    btns.innerHTML =
-                        '<button class="aths-btn-no" id="athsBtnNo">' + t.btnNo + '</button>' +
-                        '<button class="aths-btn-yes" id="athsBtnYes">' + btnYesText + '</button>';
-                }
-
-                // Gắn sự kiện
-                document.getElementById('athsBtnNo').addEventListener('click', closePopup);
-                document.getElementById('athsBtnYes').addEventListener('click', function () {
-                    if (safari) {
-                        // Safari: hiện hướng dẫn thủ công
-                        var guide = document.getElementById('athsGuide');
-                        var steps = t.guide;
-                        document.getElementById('athsGuideStep1').innerHTML = steps[0];
-                        document.getElementById('athsGuideStep2').innerHTML = steps[1];
-                        document.getElementById('athsGuideStep3').innerHTML = steps[2];
-                        guide.classList.add('active');
-                        document.getElementById('athsDesc').style.display = 'none';
-                        document.getElementById('athsBtns').style.display = 'none';
-                    } else {
-                        // Chrome: trigger native prompt
-                        if (deferredPrompt) {
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice.then(function (result) {
-                                if (result.outcome === 'accepted') {
-                                    showToast(t.toast);
-                                }
-                                deferredPrompt = null;
-                                closePopup();
-                            });
-                        } else {
-                            // Fallback nếu không có deferredPrompt
-                            closePopup();
-                            window.open('https://sherin.app', '_blank');
-                        }
-                    }
+            if (isIOS) {
+              // iOS: hiện hướng dẫn thủ công
+              document.getElementById('aths-step1').innerHTML = t.steps[0];
+              document.getElementById('aths-step2').innerHTML = t.steps[1];
+              document.getElementById('aths-step3').innerHTML = t.steps[2];
+              document.getElementById('aths-guide').style.display = 'block';
+              document.getElementById('aths-desc').style.display = 'none';
+              document.getElementById('aths-btns').style.display = 'none';
+            } else {
+              // Android: trigger native Chrome prompt
+              if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function (result) {
+                  if (result.outcome === 'accepted') {
+                    showToast(t.toast);
+                  }
+                  deferredPrompt = null;
+                  closePopup();
                 });
-
-                // Mở overlay
-                document.getElementById('athsOverlay').classList.add('active');
-
-                // Click ngoài popup để đóng
-                document.getElementById('athsOverlay').addEventListener('click', function (e) {
-                    if (e.target === this) closePopup();
-                });
+              } else {
+                // Không có deferredPrompt: đóng popup, không làm gì thêm
+                closePopup();
+              }
             }
+          }
 
-            function closePopup() {
-                var overlay = document.getElementById('athsOverlay');
-                overlay.classList.remove('active');
-                // Reset guide về trạng thái ban đầu cho lần mở sau
-                document.getElementById('athsGuide').classList.remove('active');
-                document.getElementById('athsDesc').style.display = '';
-                document.getElementById('athsBtns').style.display = '';
-            }
+          function showToast(msg) {
+            var toast = document.getElementById('aths-toast');
+            toast.textContent = msg;
+            toast.classList.add('active');
+            setTimeout(function () { toast.classList.remove('active'); }, 2500);
+          }
 
-            function showToast(msg) {
-                var toast = document.getElementById('athsToast');
-                toast.textContent = msg;
-                toast.classList.add('active');
-                setTimeout(function () { toast.classList.remove('active'); }, 2500);
-            }
-
-            // Gắn vào nút
+          // Ẩn nút sau khi cài thành công
+          window.addEventListener('appinstalled', function () {
             var btn = document.getElementById('add-to-homescreen-btn');
-            if (btn) {
-                btn.addEventListener('click', showPopup);
-            }
+            if (btn) btn.style.display = 'none';
+            deferredPrompt = null;
+          });
+
+          // Gắn vào nút
+          var btn = document.getElementById('add-to-homescreen-btn');
+          if (btn) {
+            btn.addEventListener('click', openPopup);
+          }
         })();
     </script>
 </body>
